@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LED Display Advertising</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter Tight', sans-serif;
+            background-color: #000;
+            color: white;
+            text-align: center;
+            margin: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 4px 4px;
+            cursor: url('/daljinski_mali.png'), auto;
+        }
+        .navbar-container {
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(17, 17, 17, 0.9);
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 255, 0, 0.5);
+        }
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+        }
+        .site-name {
+            font-size: 22px;
+            font-family: monospace;
+            text-decoration: none;
+            color: limegreen;
+            text-transform: uppercase;
+            background: #222;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px limegreen;
+            transition: .1s all;
+        }
+        .site-name:hover{
+            font-size: 22.2px;
+        }
+        .navbar {
+            display: flex;
+        }
+        .nav-item {
+            background: #222;
+            color: limegreen;
+            font-size: 16px;
+            padding: 10px 20px;
+            margin: 5px;
+            text-decoration: none;
+            text-transform: uppercase;
+            border-radius: 5px;
+            font-family: monospace;
+            display: inline-block;
+            box-shadow: 0 0 10px limegreen;
+            transition: all 0.3s;
+        }
+        .nav-item:hover {
+            background: limegreen;
+            color: black;
+            box-shadow: 0 0 15px limegreen;
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            color: limegreen;
+            cursor: pointer;
+            background: #222;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px limegreen;
+            text-transform: uppercase;
+            font-family: monospace;
+        }
+        .menu-toggle:hover {
+            background: limegreen;
+            color: black;
+        }
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 50px 10%;
+            text-align: left;
+        }
+        .hero-text {
+            max-width: 45%;
+        }
+        .hero h1 {
+            font-size: 36px;
+            color: limegreen;
+            margin-bottom: 10px;
+        }
+        .hero span {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 20px;
+        }
+        .hero .nav-item {
+            display: inline-block;
+            padding: 12px 20px;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .video-container {
+            flex: 1;
+            max-width: 80%;
+            display: flex;
+            justify-content: end;
+        }
+
+        .pricing-table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 15px limegreen;
+            background: #111;
+        }
+        .pricing-table th, .pricing-table td {
+            border: 2px solid limegreen;
+            padding: 15px;
+            font-size: 18px;
+            font-family: monospace;
+            color: limegreen;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .pricing-table tr:hover td {
+            background-color: rgba(50,205,50,.6);
+            color: black;
+        }
+        .contact {
+            padding: 30px;
+            background: #111;
+            box-shadow: 0 0 25px limegreen;
+            margin: 50px auto;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            color: white;
+        }
+        .video-container iframe {
+            width: 80%;
+            height: 450px;
+            max-width: 800px;
+            border: 5px solid limegreen;
+            box-shadow: 0 0 25px limegreen;
+        }
+
+        .info-section {
+            padding: 50px 10%;
+            text-align: center;
+        }
+        .info-title {
+            font-size: 28px;
+            color: limegreen;
+            margin-bottom: 30px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            justify-content: center;
+        }
+        .info-card {
+            background: #111;
+            padding: 20px;
+            /* border-radius: 10px; */
+            box-shadow: 0 0 15px limegreen;
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .info-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px limegreen;
+        }
+        .info-card h3 {
+            font-size: 20px;
+            color: limegreen;
+            margin-bottom: 10px;
+        }
+        .info-card p {
+            font-size: 16px;
+            color: white;
+        }
+
+        .location-section {
+            padding: 50px 10%;
+            text-align: center;
+        }
+        .location-title {
+            font-size: 28px;
+            color: limegreen;
+            margin-bottom: 20px;
+        }
+        .location-text {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+        }
+        .map-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px limegreen;
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+        }
+        #backToTop {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: limegreen;
+        color: black;
+        border: none;
+        padding: 10px 15px;
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        box-shadow: 0 0 10px limegreen;
+        transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #backToTop:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px limegreen;
+        }
+
+        .advice-section {
+            padding: 50px 10%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .advice-title {
+            font-size: 28px;
+            color: limegreen;
+            margin-bottom: 30px;
+        }
+        .advice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            justify-content: center;
+        }
+        .advice-card {
+            background: #111;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px limegreen;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .advice-card::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(0, 255, 0, 0.2);
+            transform: rotate(45deg);
+            transition: top 0.4s ease-in-out;
+        }
+        .advice-card:hover::before {
+            top: 100%;
+        }
+        .advice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px limegreen;
+        }
+        .advice-card h3 {
+            font-size: 22px;
+            color: limegreen;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .advice-card p {
+            font-size: 16px;
+            color: white;
+        }
+        .special-offer {
+            margin-top: 30px;
+            font-size: 20px;
+            color: limegreen;
+            background: #111;
+            padding: 15px;
+            box-shadow: 0 0 20px limegreen;
+            font-weight: bold;
+            display: inline-block;
+            /* text-transform: uppercase; */
+            overflow: hidden;
+            white-space: nowrap;
+            width: 50%;
+            /* max-width: 500px; */
+            position: relative;
+            height: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .special-offer span {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 10s linear infinite;
+            padding-left: 100px;
+        }
+        .footer {
+            display: flex;
+            height: 350px;
+            justify-content: space-around;
+            align-items: center;
+            padding: 40px 10%;
+            background: #111;
+            box-shadow: 0 0 15px limegreen;
+        }
+        .footer-left {
+            text-align: left;
+            max-width: 50%;
+        }
+        .footer-left h3 {
+            color: limegreen;
+            margin-bottom: 15px;
+        }
+        .footer-left p {
+            margin: 5px 0;
+        }
+        .footer-left .icon {
+            margin-right: 10px;
+            color: limegreen;
+        }
+        .footer-right{
+            height: 300px;
+            width: 500px;
+        }
+        .footer-right iframe {
+            width: 100%;
+            height:300px;
+            border: 3px solid limegreen;
+            box-shadow: 0 0 15px limegreen;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding: 15px 0;
+            border-top: 1px solid rgb(70, 70, 70);
+            background: #111;
+        }
+        .footer-bottom p {
+            margin: 5px 0;
+        }
+        .footer-heading{
+            font-size: 28px;
+        }
+        .footer-bottom img {
+            height: 40px;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+        .kontakt-info{
+            text-decoration: none;
+            color: limegreen;
+        }
+        @keyframes marquee {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+        @media (max-width: 1024px) {
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+       
+        @media (max-width: 768px) {
+            .navbar {
+                display: none;
+                flex-direction: column;
+                background: #111;
+                position: absolute;
+                right: 10px;
+                top: 60px;
+                width: 200px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px limegreen;
+                padding: 10px;
+            }
+            .navbar.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+                font-size: 18px;
+                letter-spacing: 2px;
+            }
+            .advice-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 600px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script>
+        function toggleMenu() {
+            document.querySelector('.navbar').classList.toggle('active');
+        }
+    </script>
+</head>
+<body>
+    <header class="navbar-container">
+        <div class="navbar-content">
+            <a href="#" class="site-name">LED Display Tešanj</a>
+            <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+            <nav class="navbar">
+                <a href="#home" class="nav-item">Početna</a>
+                <a href="#pricing" class="nav-item">Cjenovnik</a>
+                <a href="#contact" class="nav-item">Kontakt</a>
+            </nav>
+        </div>
+    </header>
+    
+    <section id="home" class="hero">
+        <div>
+            <h1>LED Display Tešanj</h1>
+            <span>Vaša reklama na pravom mjestu!</span>
+            <a href="#contact" class="nav-item">Kontaktirajte nas</a>
+        </div>
+        
+
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/kIcE4d0gt_o?si=wbzUrs7Xw1X4gHJq?autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" title="Led display Tešanj" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </section>
+    <section id="info" class="info-section">
+        <h2 class="info-title">Zašto odabrati oglašavanje putem LED displaya?</h2>
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Visoka vidljivost</h3>
+                <p>LED display se nalazi u centru Tešnja, na frekventnoj lokaciji koju svakodnevno vidi hiljade prolaznika i vozača.</p>
+            </div>
+            <div class="info-card">
+                <h3>Privlačnost</h3>
+                <p>Dinamični i svijetli sadržaji privlače pažnju više od statičnih postera ili oglasa.</p>
+            </div>
+            <div class="info-card">
+                <h3>Fleksibilnost</h3>
+                <p>Digitalni prikaz omogućava fleksibilnost u oglašavanju i momentalnu izmjenu sadržaja.</p>
+            </div>
+            <div class="info-card">
+                <h3>Ekonomska isplativost</h3>
+                <p>LED oglašavanje štedi troškove štampanja i omogućava višestruko prikazivanje oglasa istog oglašivača.</p>
+            </div>
+        </div>
+    </section>
+    <section class="location-section">
+        <h2 class="location-title">Naša lokacija</h2>
+        <p class="location-text">Naš LED display je smješten u srcu Tešnja. <br>Bilo da želite doseći lokalne stanovnike ili posjetitelje, naš display je idealan izbor za vašu promociju.</p>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2856.092308923968!2d17.987616376436927!3d44.6127067710136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475eef9c2ba6e02d%3A0xe1b9f7c3b445c9b5!2sKralja%20Tvrtka%201%2C%2074200%2C%20Te%C5%A1anj!5e0!3m2!1shr!2sba!4v1709453201234" allowfullscreen loading="lazy"></iframe>
+        </div>
+    </section>
+    <section id="pricing">
+        <h2 class="location-title">Cjenovnik oglašavanja na LED Displayu</h2>
+        <span>540 prikazivanja dnevno – vaš oglas se emituje svakih 2 minuta!</span>
+        <table class="pricing-table">
+            <tr>
+                <th>Trajanje reklame</th>
+                <th>1 dan</th>
+                <th>7 dana</th>
+                <th>30 dana</th>
+                <th>Više od 30 dana</th>
+            </tr>
+            <tr>
+                <td>5 sekundi</td>
+                <td>29,95 KM</td>
+                <td>139,95 KM</td>
+                <td>299,95 KM</td>
+                <td>Po dogovoru</td>
+
+
+            </tr>
+            <tr>
+                <td>10 sekundi</td>
+                <td>59,95 KM</td>
+                <td>279,95 KM</td>
+                <td>599,95 KM</td>
+                <td>Po dogovoru</td>
+
+            </tr>
+            <tr>
+                <td>15 sekundi</td>
+                <td>119,95 KM</td>
+                <td>559,95 KM</td>
+                <td>1.199,95 KM</td>
+                <td>Po dogovoru</td>
+
+            </tr>
+            
+        </table>
+
+    </section>
+    <section class="advice-section">
+        <h2 class="advice-title">Savjeti za kreiranje efektivnih oglasa</h2>
+        <div class="advice-grid">
+            <div class="advice-card">
+                <h3>Jasna poruka</h3>
+                <p>Fokusirajte se na jednostavnu i direktnu poruku koja se može pročitati za nekoliko sekundi.</p>
+            </div>
+            <div class="advice-card">
+                <h3>Privlačna grafika</h3>
+                <p>Izbjegavajte svijetle pozadine kako biste spriječili neugodan odsjaj noću i osigurali ugodno iskustvo gledanja.</p>
+            </div>
+            <div class="advice-card">
+                <h3>Kratki tekst</h3>
+                <p>Optimalno je koristiti 5-7 riječi kako bi poruka bila brzo shvaćena.</p>
+            </div>
+            <div class="advice-card">
+                <h3>Kvalitetan format</h3>
+                <p>Video u MP4 formatu ili slike u PNG/JPG formatu s minimalnom rezolucijom 1920×640 piksela.</p>
+            </div>
+            <div class="advice-card">
+                <h3>Poziv na akciju</h3>
+                <p>Dodajte fraze poput "Kontaktirajte nas danas!" ili "Posjetite našu web stranicu!"</p>
+            </div>
+            <div class="advice-card">
+                <h3>Pravilna dimenzija</h3>
+                <p>Prilagodite dimenzije reklame kako bi optimalno odgovarale ekranu i osigurale najbolju vidljivost.</p>
+            </div>
+        </div>
+        <p class="special-offer"><span>Reklame koje se emituju 7 i više dana – BESPLATNA izrada reklama!</span></p>
+    </section>
+    <footer class="footer">
+        <div class="footer-left">
+            <h3 class="footer-heading">Kontakt</h3>
+            <p><i class="fa-solid fa-map-marker-alt icon"></i> Adresa: Krndija 24, Tešanj, Bosna i Hercegovina</p>
+            <p><i class="fa-solid fa-envelope icon"></i>Email: <a class="kontakt-info" href="mailto:marketing@tvsmart.ba">marketing@tvsmart.ba</a></p>
+            <p><i class="fa-solid fa-phone icon"></i>Telefon:<a class="kontakt-info" href="tel:+38761197084"> +387 61 197 084</a> </p>
+        </div>
+        <div class="footer-right">
+            <iframe src="https://www.youtube.com/embed/kIcE4d0gt_o" allowfullscreen></iframe>
+        </div>
+    </footer>
+    <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> Smart Televizija d.o.o. Sva prava zadržana.</p>
+        <img src="/smart-logotip.png" alt="Grb">
+    </div>
+
+
+    <button onclick="scrollToTop()" id="backToTop" title="Vrati se na vrh">↑</button>
+
+<script>
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.onscroll = function() {
+        var button = document.getElementById("backToTop");
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            button.style.display = "block";
+        } else {
+            button.style.display = "none";
+        }
+    };
+    document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
